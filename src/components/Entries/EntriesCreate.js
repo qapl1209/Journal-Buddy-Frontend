@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../services/axiosInstance'; // Assuming axiosInstance is properly set up
+import axiosInstance from '../../services/axiosInstance'; // Assuming axiosInstance is properly set up
 
 const EntriesCreate = () => {
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [body, setBody] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -14,9 +14,9 @@ const EntriesCreate = () => {
 
     try {
       // Send POST request to create a new entry
-      await axiosInstance.post('/entries', {
+      await axiosInstance.post('/entries/', {
         title,
-        content,
+        body,
       });
       
       // After successful creation, redirect to entries list
@@ -47,16 +47,16 @@ const EntriesCreate = () => {
         </div>
 
         <div>
-          <label htmlFor="content">Content</label>
+          <label htmlFor="body">Content</label>
           <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            id="body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
             required
           />
         </div>
 
-        <button type="submit">Create Entry</button>
+        <button type="submit">Create</button>
       </form>
     </div>
   );

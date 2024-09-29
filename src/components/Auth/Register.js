@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../services/axiosInstance';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({ username: '', password: '', email: '' });
+  const navigate = useNavigate()
 
   const handleChange = (e) => setFormData({
     ...formData,
@@ -14,8 +16,9 @@ const Register = () => {
     try {
       await axiosInstance.post('/auth/register/', formData);
       alert('Registration successful');
+      navigate('/login/');
     } catch (error) {
-      alert('Error: ' + error.response.data.description);
+      alert(error.response.data.msg);
     }
   };
 
@@ -25,6 +28,7 @@ const Register = () => {
       <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
       <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
       <button type="submit">Register</button>
+      <Link to="/login">Already have an account?</Link>
     </form>
   );
 };

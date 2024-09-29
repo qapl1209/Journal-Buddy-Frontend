@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../services/axiosInstance'; // Assuming axiosInstance is properly set up
 
-const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
-};
-
 const EntriesEdit = () => {
-  const query = useQuery();
-  const { id } = query.get('id'); // Get the entry ID from the URL params
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const id = params.get('id');
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [body, setBody] = useState('');
+  const [lock, setLocked] = React.useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const handleChange = () => {
+    setLocked(!lock);
+  };
 
   // Fetch the entry data when the component mounts
   useEffect(() => {
     const fetchEntry = async () => {
       try {
-        console.log(id);
         const response = await axiosInstance.get(`/entries/${id}`);
+        console.log(response.data);
         setTitle(response.data.title);
-        setContent(response.data.content);
+        setBody(response.data.body);
       } catch (error) {
-        console.error('Error fetching entry:', error);
+        // console.error('Error fetching entry:', error);
         setError('Failed to load the entry. Please try again.');
       }
     };
@@ -39,7 +41,8 @@ const EntriesEdit = () => {
       // Send PUT request to update the entry
       await axiosInstance.put(`/entries/${id}`, {
         title,
-        content,
+        body,
+        lock,
       });
 
       // Redirect to entries list after successful update
@@ -70,13 +73,23 @@ const EntriesEdit = () => {
         </div>
 
         <div>
-          <label htmlFor="content">Content</label>
+          <label htmlFor="body">Content</label>
           <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            id="body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
             required
           />
+        </div>
+
+        <div>
+          <label> Lock?
+            <input
+              type="checkbox"
+              lock={lock}
+              onChange={handleChange}
+            />
+          </label>
         </div>
 
         <button type="submit">Update Entry</button>

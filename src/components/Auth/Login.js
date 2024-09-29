@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../services/axiosInstance';
 import { saveToken, saveRefreshToken } from '../../utils/token';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -32,6 +32,7 @@ const Login = () => {
       <input name="username" value={formData.username} onChange={handleChange} placeholder="Username" required />
       <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
       <button type="submit">Login</button>
+      <Link to="/register">Don't have an account yet?</Link>
     </form>
   );
 };
