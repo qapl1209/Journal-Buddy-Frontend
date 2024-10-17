@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../services/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { clearToken } from '../../utils/token'
+import { clearToken } from '../../utils/token';
+import styles from './EntriesList.module.css'; // Importing external CSS
 
 const EntriesList = () => {
+  useEffect(() => {
+    // Add a class to the body when the component mounts
+    document.body.classList.add(styles["body-style"]);
+
+    // Clean up by removing the class when the component unmounts
+    return () => {
+      document.body.classList.remove(styles["body-style"]);
+    };
+  }, []);
+
   const [entries, setEntries] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -13,17 +24,16 @@ const EntriesList = () => {
         const response = await axiosInstance.get('/entries/');
         setEntries(response.data);
       } catch (error) {
-        // alert('Error fetching entries');
         console.log('Error fetching entries');
         navigate('/login');
       }
     };
     fetchEntries();
-  }, []);
+  });
 
   const handleEditClick = (id) => {
     navigate(`/entries/edit?id=${id}`);
-  }
+  };
 
   const deleteEntry = async (id) => {
     try {
@@ -32,7 +42,7 @@ const EntriesList = () => {
     } catch (error) {
       alert('Error deleting entry');
     }
-  }
+  };
 
   const logoutAccount = async () => {
     try {
@@ -42,23 +52,27 @@ const EntriesList = () => {
     } catch (error) {
       alert('Error logging out');
     }
-  }
+  };
 
   return (
-    <div>
+    <div className={styles["entries-container"]}>
       <h2>Your Entries</h2>
-      <ul>
-        {entries.map(entry => (
-          <li key={entry.id}>
+      <div className={styles["actions"]}>
+        <button className={`${styles["btn"]} ${styles["create-btn"]}`} onClick={() => navigate('/entries/create')}>Create Entry</button>
+        <button className={`${styles["btn"]} ${styles["logout-btn"]}`} onClick={() => logoutAccount()}>Logout</button>
+      </div>
+      <ul className={styles["entries-list"]}>
+        {entries.map((entry) => (
+          <li key={entry.id} className={styles["entry-item"]}>
             <h3>{entry.title}</h3>
             <p>{entry.body}</p>
-            <button onClick={() => handleEditClick(entry.id)}>Edit</button>
-            <button onClick={() => deleteEntry(entry.id)}>Delete</button>
+            <div className={styles["entry-actions"]}>
+              <button className={`${styles["btn"]} ${styles["edit-btn"]}`} onClick={() => handleEditClick(entry.id)}>Edit</button>
+              <button className={`${styles["btn"]} ${styles["delete-btn"]}`} onClick={() => deleteEntry(entry.id)}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>
-      <button onClick={() => navigate('/entries/create')}>Create Entry</button>
-      <button onClick = {() => logoutAccount()}>Logout</button>
     </div>
   );
 };

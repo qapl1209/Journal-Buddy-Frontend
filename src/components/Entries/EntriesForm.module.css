@@ -1,0 +1,103 @@
+.body-style {
+  font-family: 'Arial', sans-serif;
+  background-color: #F9EFE2;
+  color: #333;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+
+.form-header {
+  margin-bottom: 20px;
+  color: #8B4513; /* Brownish color for heading */
+}
+
+.form-container {
+  background-color: #F5D3A9; /* Light pastel yellow */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  max-width: 800px;
+  min-width: 400px;
+  min-height: 50vh;
+  height: auto;
+
+  display: flex;
+  flex-direction: column; /* Stack items on top of each other */
+  width: 100%; /* Make the container take up the full width */
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.entry-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  width: 100%; /* Make each child span the full width of the container */
+  margin-bottom: 10px; /* Optional: Adds spacing between the items */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-title {
+  flex: 1;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.form-body {
+  width: 100%;
+  height: 40vh;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  resize: none;
+}
+
+.form-checkbox {
+  margin-left: 10px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.submit-button {
+  width: 23%;
+  padding: 12px;
+  background-color: #C97D60; /* Muted autumn red */
+  border: none;
+  border-radius: 8px;
+  color: #FFF;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+  display: block;
+}
+
+.submit-button:hover {
+  background-color: #B5694F; /* Darker autumn red on hover */
+}

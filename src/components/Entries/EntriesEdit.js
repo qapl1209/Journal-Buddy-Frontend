@@ -1,69 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../services/axiosInstance'; // Assuming axiosInstance is properly set up
+import axiosInstance from '../../services/axiosInstance';
+import styles from './EntriesForm.module.css'; // Importing external CSS
+
+import BackArrow from '../Common/BackArrow.js';
 
 const EntriesEdit = () => {
+  useEffect(() => {
+    // Add a class to the body when the component mounts
+    document.body.classList.add(styles["body-style"]);
+
+    // Clean up by removing the class when the component unmounts
+    return () => {
+      document.body.classList.remove(styles["body-style"]);
+    };
+  }, []);
+
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const id = params.get('id');
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [lock, setLocked] = React.useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = () => {
-    setLocked(!lock);
-  };
-
-  // Fetch the entry data when the component mounts
   useEffect(() => {
     const fetchEntry = async () => {
       try {
         const response = await axiosInstance.get(`/entries/${id}`);
-        console.log(response.data);
         setTitle(response.data.title);
         setBody(response.data.body);
       } catch (error) {
-        // console.error('Error fetching entry:', error);
         setError('Failed to load the entry. Please try again.');
       }
     };
-
     fetchEntry();
   }, [id]);
 
-  // Handle form submission for updating the entry
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send PUT request to update the entry
-      await axiosInstance.put(`/entries/${id}`, {
-        title,
-        body,
-        lock,
-      });
-
-      // Redirect to entries list after successful update
+      await axiosInstance.put(`/entries/${id}`, { title, body });
       navigate('/entries');
     } catch (error) {
-      console.error('Error updating entry:', error);
       setError('Failed to update the entry. Please try again.');
     }
   };
 
   return (
-    <div>
-      <h1>Edit Entry</h1>
-      {/* Display error message if any */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className={styles["form-container"]}>
+      <BackArrow />
+      <h2 className={styles["form-header"]}>Edit Entry</h2>
+      {error && <p className="error-message">{error}</p>}
       
-      {/* Edit entry form */}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form className={styles["entry-form"]} onSubmit={handleSubmit}>
+      <div className={styles["form-group"]}>
           <label htmlFor="title">Title</label>
           <input
+            className = {styles["form-title"]}
             type="text"
             id="title"
             value={title}
@@ -72,9 +67,10 @@ const EntriesEdit = () => {
           />
         </div>
 
-        <div>
+        <div className={styles["form-group"]}>
           <label htmlFor="body">Content</label>
           <textarea
+            className = {styles["form-body"]}
             id="body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
@@ -82,17 +78,7 @@ const EntriesEdit = () => {
           />
         </div>
 
-        <div>
-          <label> Lock?
-            <input
-              type="checkbox"
-              lock={lock}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-
-        <button type="submit">Update Entry</button>
+        <button type="submit" className={styles["submit-button"]}>Update</button>
       </form>
     </div>
   );

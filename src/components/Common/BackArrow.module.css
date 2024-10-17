@@ -1,0 +1,12 @@
+.backArrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    color: #C97D60; /* Muted autumn red */
+    transition: color 0.3s ease;
+}
+  
+.backArrow:hover {
+    color: #B5694F; /* Darker autumn red on hover */
+}

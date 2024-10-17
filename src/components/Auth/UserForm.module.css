@@ -1,0 +1,88 @@
+/* General reset and box sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.body-style {
+  font-family: 'Arial', sans-serif;
+  background-color: #F9EFE2;
+  color: #333;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+
+.form-header {
+  margin-bottom: 20px;
+  color: #8B4513; /* Brownish color for heading */
+  text-align: center;
+}
+
+.form-container {
+  background-color: #F5D3A9; /* Light pastel yellow */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  min-width: 250px;
+  height: auto;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #8B4513; /* Brownish label color */
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 2px solid #D8A97D; /* Light brown border */
+  border-radius: 8px;
+  background-color: #FAF3E3; /* Lighter pastel background */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #C97D60; /* Muted red on focus */
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #C97D60; /* Muted autumn red */
+  border: none;
+  border-radius: 8px;
+  color: #FFF;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #B5694F; /* Darker autumn red on hover */
+}
+
+.redirect-link {
+  margin-top: 15px;
+  color: #8B4513; /* Brownish link */
+  text-decoration: none;
+}
+
+.redirect-link:hover {
+  text-decoration: underline;
+}
